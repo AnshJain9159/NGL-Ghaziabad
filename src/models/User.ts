@@ -1,19 +1,19 @@
 import mongoose , {Schema,Document} from "mongoose";
 
 export interface Message extends Document{ //content ka interface
-    content: string,
-    createdAt: Date
+    content: string;
+    createdAt: Date;
 }
 
 const MessageSchema : Schema<Message> = new mongoose.Schema ({
     content: {
         type:String,
-        required:true
+        required:true,
     },
     createdAt:{
         type: Date,
         required:true,
-        default: Date.now
+        default: Date.now,
 
     }
 });
@@ -34,13 +34,13 @@ const UserSchema : Schema<User> = new mongoose.Schema ({
         type:String,
         required:[true,"Username is required"],
         trim:true,
-        unique:true
+        unique:true,
     },
     email: {
         type:String,
         required:[true,"Email is required"],
         unique:true,
-        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/,"Please enter a valid email address"]
+        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/,"Please enter a valid email address"],
     },
     password: {
         type:String,
