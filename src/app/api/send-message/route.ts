@@ -3,11 +3,12 @@ import UserModel from "@/models/User";
 import { Message } from "@/models/User";
 
 export async function POST(request:Request){
-    await dbConnect()
+    await dbConnect();
 
-    const [username,content]= await request.json()
+    const {username,content}= await request.json();
     try{
-        const user = await UserModel.findOne({username})
+        const user = await UserModel.findOne({username}).exec();
+        
         if(!user){
             return Response.json(
                 {
@@ -15,7 +16,7 @@ export async function POST(request:Request){
                     message:"User not found"
                 },
                 { status : 404}
-            )
+            );
         }
 
         //is user accepting the messages
@@ -28,6 +29,7 @@ export async function POST(request:Request){
                 { status : 403}
             )
         }
+
         const newMessage = {content,createdAt:new Date()}
         user.messages.push(newMessage as Message)
         await user.save()
@@ -37,8 +39,8 @@ export async function POST(request:Request){
                 success:true,
                 message:"Message sent successfully"
             },
-            { status : 200}
-        )
+            { status : 201}
+        );
     }catch(error){
         console.log("Error adding messages",error)
         return Response.json(
@@ -47,6 +49,6 @@ export async function POST(request:Request){
                 message:"Internal Server Error"
             },
             { status : 500}
-        )
+        );
     }
 }

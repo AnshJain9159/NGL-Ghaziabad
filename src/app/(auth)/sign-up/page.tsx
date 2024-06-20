@@ -71,15 +71,34 @@ export default function SignUpForm() {
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     try {
+      // const response = await axios.post<ApiResponse>('/api/sign-up', data);
+
+      // toast({
+      //   title: 'Success',
+      //   description: response.data.message,
+      // });
+
+      // router.replace(`/verify/${data.username}`);
+
+      // setIsSubmitting(false);
       const response = await axios.post<ApiResponse>('/api/sign-up', data);
 
-      toast({
-        title: 'Success',
-        description: response.data.message,
-      });
-
-      router.replace(`/verify/${username}`);
-
+      if (response.status === 300) {
+        // Handle the 300 Multiple Choices response
+        toast({
+          title: 'Multiple Choices',
+          description: 'There are multiple options available. Please contact support.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: response.data.message,
+        });
+  
+        router.replace(`/verify/${data.username}`);
+      }
+  
       setIsSubmitting(false);
     } catch (error) {
       console.error('Error during sign-up:', error);
@@ -87,9 +106,12 @@ export default function SignUpForm() {
       const axiosError = error as AxiosError<ApiResponse>;
 
       // Default error message
-      let errorMessage = axiosError.response?.data.message;
-      ('There was a problem with your sign-up. Please try again.');
+      let errorMessage = axiosError.response?.data.message || 'There was a problem with your sign-up. Please try again.';
 
+      if (axiosError.response?.status === 300) {
+        errorMessage = 'Multiple choices are available. Please contact support.';
+      }
+      
       toast({
         title: 'Sign Up Failed',
         description: errorMessage,

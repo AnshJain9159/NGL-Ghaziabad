@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -20,7 +19,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { signInSchema } from '@/schemas/signInSchema';
 
 export default function SignInForm() {
-  const router = useRouter()
+  const router = useRouter();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -28,17 +27,18 @@ export default function SignInForm() {
       password: '',
     },
   });
+
   const { toast } = useToast();
   const onSubmit = async (data:z.infer<typeof signInSchema>)=>{
     const result = await signIn('credentials',{
       redirect:false,
       identifier:data.identifier,
-      passwoord:data.password
+      password:data.password,
     })
 
 
     if(result?.error){
-      if(result.error=='CredentialsSignin'){
+      if(result.error==='CredentialsSignin'){
         toast({
           title: "Login failed",
           description: "Incorrect username or password",
@@ -55,7 +55,7 @@ export default function SignInForm() {
     }
 
     if(result?.url)
-      router.replace('/dashboard')
+      router.replace('/dashboard');
   }
 
 
@@ -92,7 +92,6 @@ export default function SignInForm() {
                   <FormControl>
                   <Input type="password" {...field} />
                   </FormControl>
-                  
                   <FormMessage />
                 </FormItem>
               )}

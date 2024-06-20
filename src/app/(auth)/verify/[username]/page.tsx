@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-'use client'
+'use client';
 import React from 'react'
 import { useParams,useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
@@ -23,35 +23,35 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 
 const verifyAccount = () => {
-    const router = useRouter()
-    const params= useParams<{username:string}>()
-    const {toast} =  useToast()
+    const router = useRouter();
+    const params= useParams<{username:string}>();
+    const {toast} =  useToast();
 
     const form = useForm<z.infer<typeof verifySchema>>({
         resolver: zodResolver(verifySchema),
         
       }
-    )
-    const onSubmit= async(data :z.infer<typeof verifySchema>)=>{
+    );
+    const onSubmit= async (data :z.infer<typeof verifySchema>)=>{
         try {
             const response = await axios.post(`/api/verify-code`,{
                 username: params.username,
-                code: data.code
+                code: data.code,
             })
 
             toast({
                 title: "Success",
-                description:response.data.message
+                description:response.data.message,
             })
-            router.replace('sign-in')
+            router.replace('/sign-in');
         } catch (error) {
             console.error("Error in signup of user",error)
             const axiosError = error as AxiosError<ApiResponse>;
             toast({
-            title: "Signup failed",
-            description: axiosError.response?.data.message,
+            title: "Verification  failed",
+            description: axiosError.response?.data.message ?? "An error Occured. Please try Again",
             variant:"destructive"
-            })
+            });
         }
     }
 
