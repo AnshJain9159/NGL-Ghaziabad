@@ -29,7 +29,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 
 type MessageCardProps = {
     message: Message;
-    onMessageDelete: (messageId:string)=>void;
+    onMessageDelete: (messageId : string)=>void;
 }
 
 const MessageCard =({message,onMessageDelete}:MessageCardProps)=> {
