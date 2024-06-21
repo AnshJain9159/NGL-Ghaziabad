@@ -32,7 +32,7 @@ const parseStringMessages = (messageString: string): string[] => {
 };
 
 const initialMessageString =
-  "What's your favorite movie?||Do you have any pets?||What's your dream job?";
+  "I will beat you very soon! || Why are you so dumb? || Get Lost! || Do you even bath daily? || Why don't you just go to hell?";
 
 export default function SendMessage() {
   const params = useParams<{ username: string }>();
@@ -96,7 +96,7 @@ export default function SendMessage() {
   };
 
   return (
-    <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
+    <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2]">
       <h1 className="text-4xl font-bold mb-6 text-center">
         Public Profile Link
       </h1>
@@ -169,7 +169,7 @@ export default function SendMessage() {
       </div>
       <Separator className="my-6" />
       <div className="text-center">
-        <div className="mb-4">Get Your Message Board</div>
+        <div className="mb-4">Get Your Abuses Board</div>
         <Link href={'/sign-up'}>
           <Button>Create Your Account</Button>
         </Link>

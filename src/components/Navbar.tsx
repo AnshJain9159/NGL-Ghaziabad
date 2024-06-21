@@ -24,9 +24,15 @@ const  Navbar=()=> {
           </Button>
         </>
       ) : (
+        <div className="flex space-x-8">
         <Link href="/sign-in">
           <Button className="w-full md:w-auto bg-slate-100 text-black" variant={'outline'}>Login</Button>
         </Link>
+        <Link href="/sign-up">
+        <Button className="w-full md:w-auto bg-slate-100 text-black" variant={'outline'}>Sign Up</Button>
+      </Link>
+        </div>
+        
       )}
     </div>
   </nav>

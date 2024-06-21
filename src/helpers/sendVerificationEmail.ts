@@ -14,7 +14,7 @@ export async function sendVerificationEmail(
             cc: `${email}`,
             bcc:`${email}`,
             subject: 'Mystery Message Verification Code',
-            react: VerificationEmail({ username, otp: verifyCode }),
+            react: VerificationEmail({ username, otp: verifyCode,email:email }),
           });
         return {success: true,message: 'Verification Email Send Successfully'}
 
